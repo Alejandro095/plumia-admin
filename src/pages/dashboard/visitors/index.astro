@@ -1,10 +1,15 @@
 ---
-import LayoutAdmin from "@plumia/layouts/LayoutAdmin.astro";
-import Card from "@plumia/components/Card.astro";
-import Aside from "@plumia/components/Aside.astro";
+import AdminLayout from "@plumia/layouts/AdminLayout.astro";
+import * as AuthService from "@plumia/services/auth.service";
+
+let auth = AuthService.isAuth(Astro);
+
+if (!auth) {
+  return Astro.redirect("/auth/sign-in");
+}
 ---
 
-<LayoutAdmin>
+<AdminLayout username={auth?.name!} email={auth?.email!}>
   <section class="flex items-center bg-gray-50 dark:bg-gray-900 mb-6">
     <div class="w-full">
       <!-- Start coding here -->
@@ -751,4 +756,4 @@ import Aside from "@plumia/components/Aside.astro";
       </div>
     </div>
   </div>
-</LayoutAdmin>
+</AdminLayout>

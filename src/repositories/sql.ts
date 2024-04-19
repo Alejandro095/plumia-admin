@@ -1,7 +1,7 @@
 import { createPool } from "@vercel/postgres";
 
-const pool = createPool({
+const client = createPool({
   connectionString: import.meta.env.POSTGRES_URL,
 });
 
-export default pool;
+export default client;
