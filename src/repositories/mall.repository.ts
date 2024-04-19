@@ -7,3 +7,15 @@ export const create = async (user: UserAdminType, name: string, cost: number): P
 
     return rows[0] !== undefined ? rows[0] as MallType : null;
 }
+
+export const get = async(userId: number): Promise<MallType | null> => {
+    let {rows} = await client.sql`SELECT * FROM malls WHERE userid = ${userId}`;
+
+    return rows[0] !== undefined ? rows[0] as MallType : null;
+}
+
+export const update = async (mallId: number, name: string, cost: number): Promise<MallType | null> => {
+    let {rows} = await client.sql`UPDATE malls SET name = ${name}, cost = ${cost} WHERE id = ${mallId} RETURNING *`;
+
+    return rows[0] !== undefined ? rows[0] as MallType : null;
+}

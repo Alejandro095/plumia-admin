@@ -24,3 +24,21 @@ export const getMallId = async (userId: number): Promise<number | null> => {
 
     return (rows[0] !== undefined && rows[0].id !== undefined) ? rows[0].id : null;
 }
+
+export const get = async(userId: number): Promise<UserAdminType | null> => {
+    let {rows} = await client.sql`SELECT * FROM admins WHERE id = ${userId}`;
+
+    return rows[0] !== undefined ? rows[0] as UserAdminType : null;
+}
+
+export const updatePassword = async (userId: number, password: string): Promise<UserAdminType | null> => {
+    let {rows} = await client.sql`UPDATE admins SET password = ${password} WHERE id = ${userId} RETURNING *`;
+
+    return rows[0] !== undefined ? rows[0] as UserAdminType : null;
+}
+
+export const update = async (userId: number, name: string, email: string): Promise<UserAdminType | null> => {
+    let {rows} = await client.sql`UPDATE admins SET name = ${name}, email = ${email} WHERE id = ${userId} RETURNING *`;
+
+    return rows[0] !== undefined ? rows[0] as UserAdminType : null;
+};

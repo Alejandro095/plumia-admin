@@ -21,6 +21,18 @@ export const create = async (newUser: CreateUserType): Promise<UserAdminType> =>
     return user;
 };
 
+export const updatePassword = async (userId: number, password: string): Promise<UserAdminType> => {
+    let hashedPassword = await PasswordService.hash(password);
+
+    let user = await UserRepository.updatePassword(userId, hashedPassword);
+
+    if (!user || !user.id) {
+        throw new Error("Failed to update password");
+    }
+
+    return user;
+};
+
 export const findByEmail = async (email: string): Promise<UserAdminType> => {
     let user = await UserRepository.findByEmail(email);
 
