@@ -18,3 +18,9 @@ export const findByEmail = async (email: string): Promise<UserAdminType | null> 
 
     return rows[0] !== undefined ? rows[0] as UserAdminType : null;
 }
+
+export const getMallId = async (userId: number): Promise<number | null> => {
+    let {rows} = await client.sql`SELECT id FROM malls WHERE userid = ${userId}`;
+
+    return (rows[0] !== undefined && rows[0].id !== undefined) ? rows[0].id : null;
+}

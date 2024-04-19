@@ -9,7 +9,10 @@ if (!auth) {
 }
 ---
 
-<AdminLayout username={auth?.name!} email={auth?.email!}>
+<AdminLayout username={auth?.name!} email={auth?.email!} breadcrumb={{
+  title: "Información",
+  url: "/dashboard/information"
+}}>
   <div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900 mb-4">
     <!-- Right Content -->
     <div class="col-span-full xl:col-auto">

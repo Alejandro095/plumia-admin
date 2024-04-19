@@ -1,7 +1,7 @@
 ---
 import AdminLayout from "@plumia/layouts/AdminLayout.astro";
 import * as AuthService from "@plumia/services/auth.service";
-import * as SpotsRepository from "@plumia/repositories/spots.repository";
+import * as VisitorsRepository from "@plumia/repositories/visitors.repository";
 import dayjs from "dayjs";
 let auth = AuthService.isAuth(Astro);
 
@@ -9,7 +9,7 @@ if (!auth) {
   return Astro.redirect("/auth/sign-in");
 }
 
-let spots = await SpotsRepository.getSpotsByAdminId(auth?.userId!);
+let visitors = await VisitorsRepository.getVisitorsByAdminId(auth?.userId!);
 ---
 
 <AdminLayout username={auth?.name!} email={auth?.email!} breadcrumb={{
@@ -56,7 +56,7 @@ let spots = await SpotsRepository.getSpotsByAdminId(auth?.userId!);
       </thead>
       <tbody>
 
-        {spots.map(spot => (
+        {visitors.map(visitor => (
           <tr
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
@@ -70,19 +70,19 @@ let spots = await SpotsRepository.getSpotsByAdminId(auth?.userId!);
               alt="Jese image"
             />
             <div class="ps-3">
-              <div class="text-base font-semibold">{spot.username}</div>
+              <div class="text-base font-semibold">{visitor.username}</div>
               <div class="font-normal text-gray-500">
-                {spot.vehicle}
+                {visitor.vehicle}
               </div>
             </div>
           </th>
-          <td class="px-6 py-4">{spot.spotid}</td>
-          <td class="px-6 py-4">{spot.initialdate ? dayjs(new Date(spot.initialdate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
-          <td class="px-6 py-4">{spot.finaldate ? dayjs(new Date(spot.finaldate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
-          <td class="px-6 py-4">{spot.diff}</td>
+          <td class="px-6 py-4">{visitor.spotid}</td>
+          <td class="px-6 py-4">{visitor.initialdate ? dayjs(new Date(visitor.initialdate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
+          <td class="px-6 py-4">{visitor.finaldate ? dayjs(new Date(visitor.finaldate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
+          <td class="px-6 py-4">{visitor.diff}</td>
           <td class="px-6 py-4">
             <div class="flex items-center">
-              {spot.finaldate ? (<div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>) : (<div class="h-2.5 w-2.5 rounded-full bg-yellow-500 me-2"></div>)} {spot.finaldate ? 'Finalizado' : 'En curso'}
+              {visitor.finaldate ? (<div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>) : (<div class="h-2.5 w-2.5 rounded-full bg-yellow-500 me-2"></div>)} {visitor.finaldate ? 'Finalizado' : 'En curso'}
             </div>
           </td>
         </tr>
