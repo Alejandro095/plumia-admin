@@ -7,6 +7,8 @@ let auth = AuthService.isAuth(Astro);
 if (!auth) {
   return Astro.redirect("/auth/sign-in");
 }
+
+console.log(auth);
 ---
 
 <AdminLayout username={auth?.name!} email={auth?.email!}>

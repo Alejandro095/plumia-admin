@@ -42,7 +42,7 @@ const { username, email } = Astro.props;
             <span class="sr-only">Abrir menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
+              src="/public/user.jpg"
               alt="user photo"
             />
           </button>
@@ -130,10 +130,10 @@ const { username, email } = Astro.props;
               aria-labelledby="dropdown"
             >
               <li>
-                <form>
+                <form method="POST" action="/api/auth/sign-out">
                 <button
                   type="submit"
-                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  class="block py-2 px-4 text-sm w-full rounded-b-lg text-start hover:bg-gray-100 dark:hover:bg-gray-600 border-r- dark:hover:text-white"
                   >Cerrar sesión</button
                 >
               </form>

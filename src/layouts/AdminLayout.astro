@@ -9,10 +9,11 @@ import Breadcrumb from "@plumia/components/Breadcrumb.astro";
 interface Props {
     username: string;
     email: string;
+    breadcrumb: { title: string; url: string };
 }
 
 
-const { email, username } = Astro.props
+const { email, username, breadcrumb } = Astro.props
 ---
 
 <Document title="Title">
@@ -21,8 +22,8 @@ const { email, username } = Astro.props
 
         <Aside />
 
-        <main class="p-4 md:ml-64 pt-20 flex flex-col h-full">
-            <Breadcrumb title="Inicio" url="/" />
+        <main class="p-4 md:ml-64 pt-20 flex flex-col h-full min-h-[100vh]">
+            <Breadcrumb title={breadcrumb.title} url={breadcrumb.url} />
 
             <div class="flex-1">
                 <slot />

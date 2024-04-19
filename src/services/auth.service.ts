@@ -3,7 +3,7 @@ import type { AstroCookies, AstroGlobal } from "astro";
 import * as JWTService from "./jwt.service";
 import type { SignPayloadType } from "@plumia/types/sign-payload.type";
 
-const COOKIE_KEY = "auth";
+export const COOKIE_KEY = "auth";
 
 export const authenticate = async (cookies: AstroCookies, token: string) => {
     cookies.set(COOKIE_KEY, token, {
@@ -20,16 +20,22 @@ export const authenticate = async (cookies: AstroCookies, token: string) => {
     return;
 }
 
+export const deauthenticated = (cookies: AstroCookies) => {
+    cookies.delete(COOKIE_KEY, {
+        domain: "", // Add the domain property
+        path: "/", // Add the path property
+        httpOnly: true, // Add the httpOnly property
+        sameSite: "strict", // Add the sameSite property
+        secure: true // Add the secure property
+    })
+
+    return;
+}
+
 export const get = (cookies: AstroCookies): SignPayloadType => {
     let token = cookies.get(COOKIE_KEY);
 
     return JWTService.verify(token?.value ?? "");
-}
-
-export const remove = (cookies: AstroCookies) => {
-    cookies.delete(COOKIE_KEY)
-
-    return;
 }
 
 export const isAuth = (astro: AstroGlobal): (SignPayloadType | null) => {
