@@ -5,7 +5,7 @@ import Document from "./../../../layouts/Document.astro";
 <Document title="Registro">
     <main class="bg-gray-50 dark:bg-gray-900">
         <div
-          class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900"
+          class="flex flex-col items-center justify-center px-6 pt-8 mx-auto h-min-[100vh] pt:mt-0 dark:bg-gray-900"
         >
           <a
             href="https://flowbite-admin-dashboard.vercel.app/"
@@ -25,7 +25,7 @@ import Document from "./../../../layouts/Document.astro";
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
               Iniciar sesión
             </h2>
-            <form class="mt-8 space-y-6" action="#">
+            <form class="mt-8 space-y-6" id="form">
               <div>
                 <label
                   for="name"
@@ -37,8 +37,7 @@ import Document from "./../../../layouts/Document.astro";
                   name="name"
                   id="name"
                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Jhon Snow"
-                  required=""
+                  placeholder="Alejandro"
                 />
               </div>
               <div>
@@ -142,3 +141,47 @@ import Document from "./../../../layouts/Document.astro";
         </div>
       </main>
 </Document>
+
+<script>
+  const form = document.getElementById('form') as HTMLFormElement;
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    if (data['password'] !== data['password-2']) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+
+    fetch('/api/auth/sign-up', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (data.ok) {
+          window.location.href = '/dashboard/visitors';
+        } else {
+          switch (data.message) {
+            case 'Email already exists':
+              alert('El correo ya está en uso.');
+              break;
+            default:
+              alert('Algo salió mal, intenta de nuevo. \n' + data.message);
+              break;
+          }
+        }
+
+      })
+      .catch((error) => {
+        alert('Algo salió mal, intenta de nuevo.');
+      });
+  })
+</script>
