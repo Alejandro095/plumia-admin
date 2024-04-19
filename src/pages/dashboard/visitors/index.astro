@@ -12,7 +12,7 @@ if (!auth) {
 let visitors = await VisitorsRepository.getVisitorsByAdminId(auth?.userId!);
 ---
 
-<AdminLayout username={auth?.name!} email={auth?.email!} breadcrumb={{
+<AdminLayout title="Visitantes" username={auth?.name!} email={auth?.email!} breadcrumb={{
   title: "Visitantes",
   url: "dashboard/visitors"
 }}>

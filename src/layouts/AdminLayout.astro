@@ -10,13 +10,14 @@ interface Props {
     username: string;
     email: string;
     breadcrumb: { title: string; url: string };
+    title: string;
 }
 
 
-const { email, username, breadcrumb } = Astro.props
+const { email, username, breadcrumb, title } = Astro.props
 ---
 
-<Document title="Title">
+<Document title={`PlumIA - ${title}`}>
     <div class="flex-1 antialiased bg-gray-50 dark:bg-gray-900">
         <Navbar username={username} email={email}  />
 

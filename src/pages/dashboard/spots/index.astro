@@ -11,7 +11,7 @@ if (!auth) {
 let spots = await SpotsRepository.getSpotsByAdminId(auth.userId);
 ---
 
-<AdminLayout username={auth?.name!} email={auth?.email!} breadcrumb={{
+<AdminLayout title="Cajones" username={auth?.name!} email={auth?.email!} breadcrumb={{
   title: "Cajones de estacionamiento",
   url: "/dashboard/spots"
 }}>
