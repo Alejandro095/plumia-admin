@@ -3,6 +3,13 @@ import AdminLayout from "@plumia/layouts/AdminLayout.astro";
 import * as AuthService from "@plumia/services/auth.service";
 import * as VisitorsRepository from "@plumia/repositories/visitors.repository";
 import dayjs from "dayjs";
+
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 let auth = AuthService.isAuth(Astro);
 
 if (!auth) {
@@ -10,6 +17,8 @@ if (!auth) {
 }
 
 let visitors = await VisitorsRepository.getVisitorsByAdminId(auth?.userId!);
+
+dayjs.tz.setDefault('America/Mexico_City');
 ---
 
 <AdminLayout title="Visitantes" username={auth?.name!} email={auth?.email!} breadcrumb={{
