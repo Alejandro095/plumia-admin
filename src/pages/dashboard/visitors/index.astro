@@ -4,12 +4,6 @@ import * as AuthService from "@plumia/services/auth.service";
 import * as VisitorsRepository from "@plumia/repositories/visitors.repository";
 import dayjs from "dayjs";
 
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-
 let auth = AuthService.isAuth(Astro);
 
 if (!auth) {
@@ -17,8 +11,6 @@ if (!auth) {
 }
 
 let visitors = await VisitorsRepository.getVisitorsByAdminId(auth?.userId!);
-
-dayjs.tz.setDefault('America/Mexico_City');
 ---
 
 <AdminLayout title="Visitantes" username={auth?.name!} email={auth?.email!} breadcrumb={{
@@ -86,8 +78,8 @@ dayjs.tz.setDefault('America/Mexico_City');
             </div>
           </th>
           <td class="px-6 py-4">{visitor.spotid}</td>
-          <td class="px-6 py-4">{visitor.initialdate ? dayjs(new Date(visitor.initialdate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
-          <td class="px-6 py-4">{visitor.finaldate ? dayjs(new Date(visitor.finaldate)).format('DD/MM/YYYY HH:mm:ss') : ''}</td>
+          <td class="px-6 py-4">{visitor.initialdate ? dayjs(new Date(visitor.initialdate)).add(6, 'hours').format('DD/MM/YYYY HH:mm:ss') : ''}</td>
+          <td class="px-6 py-4">{visitor.finaldate ? dayjs(new Date(visitor.finaldate)).add(6, 'hours').format('DD/MM/YYYY HH:mm:ss') : ''}</td>
           <td class="px-6 py-4">{visitor.diff}</td>
           <td class="px-6 py-4">
             <div class="flex items-center">
