@@ -160,7 +160,7 @@ src/
 
 ## Getting started
 
-Requirements: Node.js 18+ and a PostgreSQL database (Vercel Postgres).
+Requirements: Node.js 24 and a PostgreSQL database (Vercel Postgres).
 
 1. Clone the repository and install the dependencies:
 
